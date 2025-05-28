@@ -1,0 +1,86 @@
+{
+	"name": "@nestjs-utils/clean-architecture",
+	"version": "1.0.0",
+	"description": "Clean architecture utilities for Nest.JS project",
+	"type": "module",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/esm/index.d.ts",
+			"require": "./dist/cjs/index.js",
+			"import": "./dist/esm/index.js",
+			"default": "./dist/esm/index.js"
+		}
+	},
+	"scripts": {
+		"clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true })\"",
+		"build": "npm run clean && npm run build-js",
+		"build-js": "npm run build-js-esm && npm run build-js-cjs",
+		"build-js-esm": "tsc --project tsconfig.build.json --outDir dist/esm",
+		"build-js-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs --moduleResolution node --verbatimModuleSyntax false",
+		"format": "biome format ./src --write",
+		"lint": "biome lint ./src",
+		"clean-code": "npm run lint && npm run tsc && npm run format",
+		"tsc": "tsc",
+		"watch": "npm run build-js-main -- --watch & npm run build-js-esm -- --watch & npm run build-js-cjs -- --watch",
+		"docs": "typedoc",
+		"prepublishOnly": "npm run build"
+	},
+	"lint-staged": {
+		"*.{js,ts,json,md}": "biome format --write"
+	},
+	"keywords": [
+		"nestjs",
+		"nest.js",
+        "clean architecture"
+	],
+	"author": {
+		"name": "Maxime AUBRY",
+		"email": "maxime.aubry.76@gmail.com"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@nestjs/common": "^11.1.0",
+		"@nestjs/core": "^11.1.0",
+		"@nestjs/platform-express": "^11.0.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/express": "^5.0.0",
+		"@types/node": "^22.15.3",
+		"lint-staged": "^16.0.0",
+		"ts-node": "^10.9.2",
+		"typedoc": "^0.28.4",
+		"typedoc-github-theme": "^0.3.0",
+		"typescript": "^5.8.3"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"files": [
+		"package.json",
+		"README.md",
+		"LICENSE",
+		"src/**/*.ts",
+		"dist/**/*.js",
+		"dist/**/*.js.map",
+		"dist/**/*.d.ts",
+		"dist/**/*.d.ts.map",
+		"!src/test/",
+		"!src/**/*_test.ts",
+		"!dist/test/",
+		"!dist/**/*_test.js",
+		"!dist/**/*_test.js.map",
+		"!dist/**/*_test.d.ts",
+		"!dist/**/*_test.d.ts.map"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/maxime-aubry/nestjs-utils-clean-architecture.git",
+		"directory": "packages/core"
+	},
+	"homepage": "https://maxime-aubry.github.io/nestjs-utils-clean-architecture"
+}

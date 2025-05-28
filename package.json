@@ -1,0 +1,15 @@
+{
+  "name": "nestjs-clean-architecture-monorepo",
+  "version": "1.0.0",
+  "description": "nestjs-clean-architecture monorepo",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "npm run build -w packages/*",
+    "format": "npm run format -w packages/*",
+    "lint": "npm run lint -w packages/*",
+    "clean-code": "npm run clean-code --workspaces",
+    "test": "npm run test -w tests",
+    "docs": "npm run docs -w packages/*"
+  }
+}
